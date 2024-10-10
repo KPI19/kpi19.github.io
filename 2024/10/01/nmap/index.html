@@ -1,0 +1,482 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Nmap | 小R博客 &gt;_&lt;</title><meta name="author" content="小R"><meta name="copyright" content="小R"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Nmap（网络映射器）是一款用于网络发现和安全审计的网络安全工具，在其首次发布后的前几年之间是 GPL 自由软件，但最近版本的 nmap 是否是 FOSS 自由软件还存在许多质疑和争议。软件名字Nmap是Network Mapper的简称。通常情况下，Nmap用于：  列举网络主机清单 管理服务升级调度 监控主机 服务运行状况      Nmap 安全扫描器   原作者 ： Gordon Lyon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nmap">
+<meta property="og:url" content="http://kpi19.github.io/2024/10/01/nmap/index.html">
+<meta property="og:site_name" content="小R博客 &gt;_&lt;">
+<meta property="og:description" content="Nmap（网络映射器）是一款用于网络发现和安全审计的网络安全工具，在其首次发布后的前几年之间是 GPL 自由软件，但最近版本的 nmap 是否是 FOSS 自由软件还存在许多质疑和争议。软件名字Nmap是Network Mapper的简称。通常情况下，Nmap用于：  列举网络主机清单 管理服务升级调度 监控主机 服务运行状况      Nmap 安全扫描器   原作者 ： Gordon Lyon">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.virtualizationhowto.com/wp-content/uploads/2023/07/Nmap-Ping-Sweep-for-home-lab-network-780x470.png">
+<meta property="article:published_time" content="2024-10-01T11:06:07.000Z">
+<meta property="article:modified_time" content="2024-10-08T17:08:15.257Z">
+<meta property="article:author" content="小R">
+<meta property="article:tag" content="信息获取技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.virtualizationhowto.com/wp-content/uploads/2023/07/Nmap-Ping-Sweep-for-home-lab-network-780x470.png"><link rel="shortcut icon" href="/Gallery/User/b.png"><link rel="canonical" href="http://kpi19.github.io/2024/10/01/nmap/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#75ff61","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Nmap',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-09 01:08:15'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.githubusercontent.com/u/99721814?v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw far fa-compass"></i><span> 足迹</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/images/"><i class="fa-fw far fa-images"></i><span> 图片</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/friends/"><i class="fa-fw fas fa-user-friends"></i><span> 朋友</span></a></li><li><a class="site-page child" href="/resources/"><i class="fa-fw fas fa-feather-alt"></i><span> 资源</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://miro.medium.com/v2/resize:fit:720/format:webp/1*apOap4Yzzzuh3hht_dK6hQ.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="小R博客 &gt;_&lt;"><span class="site-name">小R博客 &gt;_&lt;</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw far fa-compass"></i><span> 足迹</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/images/"><i class="fa-fw far fa-images"></i><span> 图片</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/friends/"><i class="fa-fw fas fa-user-friends"></i><span> 朋友</span></a></li><li><a class="site-page child" href="/resources/"><i class="fa-fw fas fa-feather-alt"></i><span> 资源</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Nmap</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-01T11:06:07.000Z" title="发表于 2024-10-01 19:06:07">2024-10-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-08T17:08:15.257Z" title="更新于 2024-10-09 01:08:15">2024-10-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Nmap"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Nmap（网络映射器）是一款用于<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E7%BD%91%E7%BB%9C%E5%8F%91%E7%8E%B0&action=edit&redlink=1">网络发现</a>和<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E5%AE%89%E5%85%A8%E5%AE%A1%E8%AE%A1&action=edit&redlink=1">安全审计</a>的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全工具</a>，在其首次发布后的前几年之间是 GPL <a href="">自由软件</a>，但最近版本的 nmap 是否是 FOSS 自由软件还存在许多质疑和争议。软件名字Nmap是Network Mapper的简称。通常情况下，Nmap用于：</p>
+<ul>
+<li>列举网络主机清单</li>
+<li>管理服务升级调度</li>
+<li>监控主机</li>
+<li>服务运行状况</li>
+</ul>
+
+<figure>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://miro.medium.com/v2/resize:fit:1400/1*7LuIDiYGbosYLmBflveVbA.png" width="400"
+height="250" align="middle" > 
+<figcaption><figcaption><center><b>Nmap 安全扫描器</b></center></figcaption></figcaption>
+</figure>
+
+<p>原作者 ： Gordon Lyon (Fyodor)<br>首次发布 ： 1997年9月<br>当前版本 ：7.92（2021年8月7日 ， 3年前）<br>源代码库 ： <a target="_blank" rel="noopener" href="https://github.com/nmap/nmap.git">github.com&#x2F;nmap&#x2F;nmap.git</a><br>编程语言 ： C , C++ , Python , Lua<br>操作系统 ：跨平台<br>语言 ： 英语<br>类型 ： 计算机安全 ， 网路管理<br>许可协议 ： NPSL  或 被修改过的 GPLv2   或 专有软件<br>网站 ： <a target="_blank" rel="noopener" href="https://nmap.org/">nmap.org</a></p>
+<ul>
+<li> Nmap 可以检测目前主机是否在线 、端口开放情况、侦测运行的服务类型及版本信息、侦测操作系统与设备类型等信息。 它是网络管理员必用的软件之一，用以评估网络系统安全。 </li>
+<br>
+<li> Nmap 是不少<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%BB%91%E5%AE%A2https://zh.wikipedia.org/wiki/%E9%BB%91%E5%AE%A2">黑客</a>及<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%84%9A%E6%9C%AC%E5%B0%8F%E5%AD%90">脚本小</a>子爱用的工具 比如小r我 ^-^。<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%91%98">系统管理员</a>可以利用Nmap來探測工作環境中未經批准使用的服务器，黑客通常会利用Nmap來搜集目标电脑的網絡设定，从而计划攻击的方法。  </li>
+<br>
+<li> Nmap 通常用在信息搜集阶段，用于搜集目标机主机的基本状态信息。扫描结果可以作为<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F">漏洞扫描</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8">漏洞利用</a>和<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87">权限提升<a/>阶段的输入。例如，业界流行的漏洞扫描工具<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Nessus">Nessus</a>与漏洞利用工具<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Metasploit">Metasploit</a>都支持导入Nmap的 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/XML">XML</a>格式结果，而Metasploit框架内也集成了Nmap工具（支持Metasploit直接扫描）。  </li>
+</ul>
+
+<h2 id="Nmap-核心功能"><a href="#Nmap-核心功能" class="headerlink" title="Nmap 核心功能"></a>Nmap 核心功能</h2><hr>
+<h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><p>用于发现目标主机是否处于活动状态。<br>Nmap 提供了多种检测机制，可以更有效地辨识主机。例如可用来列举目标网络中哪些主机已经开启，类似于Ping命令的功能。 </p>
+<h2 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h2><p>用于扫描主机上的端口状态。<br>Nmap可以将端口识别为开放（Open）、关闭（Closed）、过滤（Filtered）、未过滤（Unfiltered）、开放或过滤（Open|Filtered）、关闭或过滤（Closed|Filtered）。默认情况下，Nmap会扫描1660个常用的端口，可以覆盖大多数基本应用情况。 </p>
+<h2 id="版本侦测"><a href="#版本侦测" class="headerlink" title="版本侦测"></a>版本侦测</h2><p>用于识别端口上运行的应用程序与程序版本。<br>Nmap目前可以识别数千种应用的签名（Signatures）,检测数百种应用协议。而对于不识别的应用，Nmap默认会将应用的指纹(Fingerprint)打印出来，如果用户确知该应用程序，那么用户可以将信息提交到社区，为社区做贡献。 </p>
+<h2 id="操作系统侦测"><a href="#操作系统侦测" class="headerlink" title="操作系统侦测"></a>操作系统侦测</h2><p>用于识别目标主机的操作系统类型、版本编号及设备类型。<br>Nmap目前提供1500个操作系统或设备的指纹数据库，可以识别通用PC系统、路由器、交换机等设备类型。</p>
+<h2 id="防火墙-IDS规避和哄骗"><a href="#防火墙-IDS规避和哄骗" class="headerlink" title="防火墙&#x2F;IDS规避和哄骗"></a>防火墙&#x2F;IDS规避和哄骗</h2><p>Nmap提供多种机制来规避防火墙、IDS的的屏蔽和检查，便于秘密地探查目标主机的状况。<br>基本的规避方式包括：封包分片、IP诱骗、IP伪装、MAC地址伪装。 </p>
+<h2 id="NSE脚本引擎"><a href="#NSE脚本引擎" class="headerlink" title="NSE脚本引擎"></a>NSE脚本引擎</h2><p>NSE是Nmap最强大最灵活的特性之一，可以用于增强主机发现、端口扫描、版本侦测和操作系统侦测等功能，还可以用来扩展高级的功能如web扫描、漏洞发现和漏洞利用等。Nmap使用Lua语言来作为NSE脚本语言，目前的Nmap脚本库已经支持350多个脚本。 </p>
+<h2 id="Nmap基本命令和典型用法"><a href="#Nmap基本命令和典型用法" class="headerlink" title="Nmap基本命令和典型用法"></a>Nmap基本命令和典型用法</h2><hr>
+<ul>
+<li>Nmap 基本指令 </li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap [ &lt;掃描類型&gt; ...] [ &lt;選項&gt; ] &#123; &lt;掃描目標說明&gt; &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li> 全方位掃描（包括Host Discovery、端口掃描、端口服務版本掃描、OS類型掃描及預設腳本掃描）: </li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -A target_ip</span><br></pre></td></tr></table></figure>
+<ul>
+<li> Ping掃描: </li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sn target_ip</span><br></pre></td></tr></table></figure>
+<ul>
+<li> 快速端口掃描（前100個常用端口）: </li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -F target_ip</span><br></pre></td></tr></table></figure>
+<ul>
+<li>版本掃描: </li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV target_ip </span><br></pre></td></tr></table></figure>
+<ul>
+<li>作業系统類型掃描: </li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -O target_ip</span><br></pre></td></tr></table></figure>
+<ul>
+<li>運行標記為safe的nse script</li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sC target_ip</span><br></pre></td></tr></table></figure>
+<ul>
+<li>運行完整tcp握手掃描(雖然nmap預設使用tcp半開放掃描,即選項-sS。但卻容易被今日大多資安廠商入侵偵測系統發現，因此使用“完整握手掃描-sT”還比“隱形掃描-sS”來得更隱匿) </li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sT target_ip</span><br></pre></td></tr></table></figure>
+<ul>
+<li>發送碎片封包，躲避ids偵測和繞過防火牆(8-bytes為單位），但實際上碎片封包特徵過於明顯，不建議於實際紅隊攻擊中使用
+ </li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -f target_ip</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用同網段上閒置主機(zombie_host)作為跳板掃描</li>
+</ul>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sI zombie_host:zombie_port target_ip</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用大量虛假的源地址，混淆被掃描方日後鑑識、分析的能力，即誘餌掃描</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -D ip1,ip2,ip3,... target_ip  </span><br></pre></td></tr></table></figure>
+<p><strong> 或  </strong></p>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -D RND:10 target_ip (隨機產生10組ipv4掩護）</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><hr>
+<p>Nmap 常被跟評估系統漏洞軟件Nessus混為一談。Nmap 以隱祕的手法，避開入侵检测系统的監視，並儘可能不影響目標系統的日常操作。 </p>
+<p>Nmap 在电影《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%BB%91%E5%AE%A2%E5%B8%9D%E5%9B%BD">黑客帝国</a>》中，連同<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=SSH1&action=edit&redlink=1">SSH1</a>的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=32%E4%BD%8D%E5%85%83%E8%BF%B4%E5%9C%88%E5%86%97%E9%A4%98%E6%A0%A1%E9%A9%97&action=edit&redlink=1">32位元迴圈冗餘校驗</a>漏洞，被崔妮蒂用以入侵發電站的能源管理系統。 </p>
+<h2 id="小R个人笔记与采用的技术×"><a href="#小R个人笔记与采用的技术×" class="headerlink" title="小R个人笔记与采用的技术×"></a>小R个人笔记与采用的技术×</h2><hr>
+<h3 id="基本了解"><a href="#基本了解" class="headerlink" title="基本了解"></a>基本了解</h3><table>
+<thead>
+<tr>
+<th>旗标</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SYN</td>
+<td>（Synchronize Sequence Numbers）， 是TCP&#x2F;IP建立连接时使用的握手信号。</td>
+</tr>
+<tr>
+<td>ACK</td>
+<td>用于确认接收到的数据段的报文。</td>
+</tr>
+<tr>
+<td>URG</td>
+<td>使一端可以告诉另一端有些具有某种方式的“紧急数据”已经放置在普通的数据流中。</td>
+</tr>
+<tr>
+<td>PSH</td>
+<td>发送端应用程序在发送数据时如果设置了PSH标志位，表示希望接收端尽快将数据交给应用程序处理，而不必等待缓冲区填满。</td>
+</tr>
+<tr>
+<td>FIN</td>
+<td>用于表示TCP连接的终止。</td>
+</tr>
+<tr>
+<td>RST</td>
+<td>（Reset），用于恢复系统到初始状态的实用工具。</td>
+</tr>
+</tbody></table>
+<h3 id="基本命令旗标"><a href="#基本命令旗标" class="headerlink" title="基本命令旗标"></a>基本命令旗标</h3><table>
+<thead>
+<tr>
+<th>普通</th>
+<th>复杂</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-h</td>
+<td>–help</td>
+<td>显示帮助</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>–version</td>
+<td>显示版本</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>–count</td>
+<td>数据包计数</td>
+</tr>
+<tr>
+<td>-I</td>
+<td>–interface</td>
+<td>接口名称</td>
+</tr>
+<tr>
+<td>.</td>
+<td>–flood</td>
+<td>尽快发送数据包, 不显示回复</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>–verbose</td>
+<td>详细模式</td>
+</tr>
+<tr>
+<td>-0</td>
+<td>–rawip</td>
+<td>原始 IP 模式</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>–icmp</td>
+<td>ICMP 模式</td>
+</tr>
+<tr>
+<td>-2</td>
+<td>–udp</td>
+<td>UDP 模式</td>
+</tr>
+<tr>
+<td>-8</td>
+<td>–scan</td>
+<td>扫描模式</td>
+</tr>
+<tr>
+<td>-9</td>
+<td>–listen</td>
+<td>监听模式</td>
+</tr>
+<tr>
+<td>.</td>
+<td>–rand-dest</td>
+<td>随机目的地址模式</td>
+</tr>
+<tr>
+<td>.</td>
+<td>–rand-source</td>
+<td>随机源地址模式</td>
+</tr>
+<tr>
+<td>-s(小写)</td>
+<td>–baseport</td>
+<td>基本源端口（默认随机）</td>
+</tr>
+<tr>
+<td>-p（小写）</td>
+<td>–destport</td>
+<td>[+][+] &lt;接口&gt; 目的接口 （默认 0） ctrl + z inc&#x2F;dec</td>
+</tr>
+<tr>
+<td>-Q</td>
+<td>–seqnum</td>
+<td>仅显示 TCP 序列号</td>
+</tr>
+<tr>
+<td>-F</td>
+<td>–fin</td>
+<td>设置 FIN 旗标</td>
+</tr>
+<tr>
+<td>-S（大写）</td>
+<td>–syn</td>
+<td>设置 SYN 旗标</td>
+</tr>
+<tr>
+<td>-P（大写）</td>
+<td>–push</td>
+<td>设置 PUSH 旗标</td>
+</tr>
+<tr>
+<td>-A</td>
+<td>–ack</td>
+<td>设置 ACK 旗标</td>
+</tr>
+<tr>
+<td>-U</td>
+<td>–urg</td>
+<td>设置 URG 旗标</td>
+</tr>
+<tr>
+<td>.</td>
+<td>–TCP-timestamp</td>
+<td>启用 TCP、时间戳选项，以猜测 H&#x2F;Z 正常运行时间</td>
+</tr>
+</tbody></table>
+<h2 id="NMAP-基础"><a href="#NMAP-基础" class="headerlink" title="NMAP 基础"></a>NMAP 基础</h2><ul>
+<li>在您的网络中查找实时主机<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sn google.com</span><br></pre></td></tr></table></figure></li>
+<li>指纹识别目标主机上运行的操作系统和服务<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV scanme.nmap.org</span><br></pre></td></tr></table></figure></li>
+<li>启用操作系统检测<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -o  scanme.nmap.org</span><br></pre></td></tr></table></figure></li>
+<li>对目标主机使用 NSE 脚本<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sC scanme.nmap.org</span><br></pre></td></tr></table></figure></li>
+<li>从扫描中排除主机列表<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap --exclude-file dontscan.txt 192.168.100.1/24</span><br></pre></td></tr></table></figure></li>
+<li>扫描 IP 地址范围<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -p 25,80 -o -T4 192.168.100.1/24 scanme.nmap.org</span><br></pre></td></tr></table></figure></li>
+<li>扫描互联网上的随机目标<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -iR 100</span><br></pre></td></tr></table></figure></li>
+<li>收集网络服务器的签名<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -p 80,443 -Pn -T4 --open --script http -headers, http-title,ssl -cert</span><br></pre></td></tr></table></figure></li>
+<li>使用 Nping 收集 ICMP 回显回复<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap --icmp -c 1 --icmp-type 0 --icmp-code 0 --<span class="built_in">source</span> -ip 192.168.100.5 --dest-ip 192.168.100.1 --icmp-id 5</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="暴力审计"><a href="#暴力审计" class="headerlink" title="暴力审计"></a>暴力审计</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nmap --script (暴力破解脚本) --script-args brute.mode = (目标IP)</span><br><span class="line">nmap --script (暴力破解脚本) --script-args brute.mode = pass (目标IP)</span><br><span class="line">nmap --script (暴力破解脚本) --script-agrs brute.mode = creds.brute.credfile=./cred.txt  (目标IP)</span><br><span class="line">nmap --script (暴力破解脚本) --script-agrs brute.retries = 1  (目标IP)</span><br><span class="line">nmap --script (暴力破解脚本) --script-agrs brute.unique = <span class="literal">false</span>  (目标IP)</span><br><span class="line">nmap --script (暴力破解脚本) --script-agrs brute.useraspass = <span class="literal">false</span>  (目标IP)</span><br><span class="line">nmap --script (暴力破解脚本) --script-agrs brute.emptypass = <span class="literal">true</span>  (目标IP)</span><br><span class="line">nmap --script (暴力破解脚本) --script-agrs brute.delay = 1s  (目标IP)</span><br><span class="line">nmap --script (暴力破解脚本) --script-agrs brute.passonly = <span class="literal">true</span>  (目标IP)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h2 id="HTTP-pipelining"><a href="#HTTP-pipelining" class="headerlink" title="HTTP pipelining"></a>HTTP pipelining</h2><h2 id="Configuring-the-NSE-library-httpspider"><a href="#Configuring-the-NSE-library-httpspider" class="headerlink" title="Configuring the NSE library httpspider"></a>Configuring the NSE library httpspider</h2><h2 id="Firewall-Evasion-Methods"><a href="#Firewall-Evasion-Methods" class="headerlink" title="Firewall Evasion Methods"></a>Firewall Evasion Methods</h2><h2 id="Use-Decoy"><a href="#Use-Decoy" class="headerlink" title="Use Decoy"></a>Use Decoy</h2><h2 id="Idle-Zombie-Scan"><a href="#Idle-Zombie-Scan" class="headerlink" title="Idle Zombie Scan"></a>Idle Zombie Scan</h2><h2 id="Manually-specify-a-source-port"><a href="#Manually-specify-a-source-port" class="headerlink" title="Manually specify a source port"></a>Manually specify a source port</h2><h2 id="Append-Random-Data"><a href="#Append-Random-Data" class="headerlink" title="Append Random Data"></a>Append Random Data</h2><h2 id="Randomize-Target-Scan-Order"><a href="#Randomize-Target-Scan-Order" class="headerlink" title="Randomize Target Scan Order"></a>Randomize Target Scan Order</h2><h2 id="Spoof-MAC-Address"><a href="#Spoof-MAC-Address" class="headerlink" title="Spoof MAC Address"></a>Spoof MAC Address</h2><h2 id="Send-Bad-Checksums"><a href="#Send-Bad-Checksums" class="headerlink" title="Send Bad Checksums"></a>Send Bad Checksums</h2><h2 id="Detecting-STMP-open-relays"><a href="#Detecting-STMP-open-relays" class="headerlink" title="Detecting STMP open relays"></a>Detecting STMP open relays</h2><h2 id="Brute-forcing-SMTP-password"><a href="#Brute-forcing-SMTP-password" class="headerlink" title="Brute forcing SMTP password"></a>Brute forcing SMTP password</h2><h2 id="Enumerating-SMTP-username"><a href="#Enumerating-SMTP-username" class="headerlink" title="Enumerating SMTP username"></a>Enumerating SMTP username</h2><h2 id="Detecting-suspicious-SMTP-server"><a href="#Detecting-suspicious-SMTP-server" class="headerlink" title="Detecting suspicious SMTP server"></a>Detecting suspicious SMTP server</h2><h2 id="Brute-force-IMAP-password"><a href="#Brute-force-IMAP-password" class="headerlink" title="Brute force IMAP password"></a>Brute force IMAP password</h2><h2 id="Retreving-the-capabilities-of-an-IMAP-server"><a href="#Retreving-the-capabilities-of-an-IMAP-server" class="headerlink" title="Retreving the capabilities of an IMAP server"></a>Retreving the capabilities of an IMAP server</h2><h2 id="Brute-forcing-POP3-passwords"><a href="#Brute-forcing-POP3-passwords" class="headerlink" title="Brute forcing POP3 passwords"></a>Brute forcing POP3 passwords</h2><h2 id="Retrieving-infromation-from-SMTP-server-with-NTLM-authentication"><a href="#Retrieving-infromation-from-SMTP-server-with-NTLM-authentication" class="headerlink" title="Retrieving infromation from SMTP server with NTLM authentication"></a>Retrieving infromation from SMTP server with NTLM authentication</h2><h2 id="Generating-scan-report"><a href="#Generating-scan-report" class="headerlink" title="Generating scan report"></a>Generating scan report</h2><h3 id="Saving-scan-results-in-an-XML-format"><a href="#Saving-scan-results-in-an-XML-format" class="headerlink" title="Saving scan results in an XML format"></a>Saving scan results in an XML format</h3><h3 id="Saving-scan-results-to-a-SQLite-database"><a href="#Saving-scan-results-to-a-SQLite-database" class="headerlink" title="Saving scan results to a SQLite database"></a>Saving scan results to a SQLite database</h3></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://kpi19.github.io">小R</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://kpi19.github.io/2024/10/01/nmap/">http://kpi19.github.io/2024/10/01/nmap/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://kpi19.github.io" target="_blank">小R博客 >_<</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E6%8A%80%E6%9C%AF/">信息获取技术</a></div><div class="post_share"><div class="social-share" data-image="https://www.virtualizationhowto.com/wp-content/uploads/2023/07/Nmap-Ping-Sweep-for-home-lab-network-780x470.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/10/01/morse_code/" title="摩斯电码"><img class="cover" src="https://upload.wikimedia.org/wikipedia/commons/9/9c/J38TelegraphKey.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">摩斯电码</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Nmap-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="toc-number">1.</span> <span class="toc-text">Nmap 核心功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E5%8F%91%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">主机发现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F"><span class="toc-number">3.</span> <span class="toc-text">端口扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E4%BE%A6%E6%B5%8B"><span class="toc-number">4.</span> <span class="toc-text">版本侦测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%BE%A6%E6%B5%8B"><span class="toc-number">5.</span> <span class="toc-text">操作系统侦测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99-IDS%E8%A7%84%E9%81%BF%E5%92%8C%E5%93%84%E9%AA%97"><span class="toc-number">6.</span> <span class="toc-text">防火墙&#x2F;IDS规避和哄骗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NSE%E8%84%9A%E6%9C%AC%E5%BC%95%E6%93%8E"><span class="toc-number">7.</span> <span class="toc-text">NSE脚本引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nmap%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E5%92%8C%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">Nmap基本命令和典型用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">9.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8FR%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0%E4%B8%8E%E9%87%87%E7%94%A8%E7%9A%84%E6%8A%80%E6%9C%AF%C3%97"><span class="toc-number">10.</span> <span class="toc-text">小R个人笔记与采用的技术×</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BA%86%E8%A7%A3"><span class="toc-number">10.1.</span> <span class="toc-text">基本了解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E6%97%97%E6%A0%87"><span class="toc-number">10.2.</span> <span class="toc-text">基本命令旗标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NMAP-%E5%9F%BA%E7%A1%80"><span class="toc-number">11.</span> <span class="toc-text">NMAP 基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9A%B4%E5%8A%9B%E5%AE%A1%E8%AE%A1"><span class="toc-number">12.</span> <span class="toc-text">暴力审计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-pipelining"><span class="toc-number">13.</span> <span class="toc-text">HTTP pipelining</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuring-the-NSE-library-httpspider"><span class="toc-number">14.</span> <span class="toc-text">Configuring the NSE library httpspider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Firewall-Evasion-Methods"><span class="toc-number">15.</span> <span class="toc-text">Firewall Evasion Methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-Decoy"><span class="toc-number">16.</span> <span class="toc-text">Use Decoy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Idle-Zombie-Scan"><span class="toc-number">17.</span> <span class="toc-text">Idle Zombie Scan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Manually-specify-a-source-port"><span class="toc-number">18.</span> <span class="toc-text">Manually specify a source port</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Append-Random-Data"><span class="toc-number">19.</span> <span class="toc-text">Append Random Data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Randomize-Target-Scan-Order"><span class="toc-number">20.</span> <span class="toc-text">Randomize Target Scan Order</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spoof-MAC-Address"><span class="toc-number">21.</span> <span class="toc-text">Spoof MAC Address</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Send-Bad-Checksums"><span class="toc-number">22.</span> <span class="toc-text">Send Bad Checksums</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Detecting-STMP-open-relays"><span class="toc-number">23.</span> <span class="toc-text">Detecting STMP open relays</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-forcing-SMTP-password"><span class="toc-number">24.</span> <span class="toc-text">Brute forcing SMTP password</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enumerating-SMTP-username"><span class="toc-number">25.</span> <span class="toc-text">Enumerating SMTP username</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Detecting-suspicious-SMTP-server"><span class="toc-number">26.</span> <span class="toc-text">Detecting suspicious SMTP server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-force-IMAP-password"><span class="toc-number">27.</span> <span class="toc-text">Brute force IMAP password</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Retreving-the-capabilities-of-an-IMAP-server"><span class="toc-number">28.</span> <span class="toc-text">Retreving the capabilities of an IMAP server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-forcing-POP3-passwords"><span class="toc-number">29.</span> <span class="toc-text">Brute forcing POP3 passwords</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Retrieving-infromation-from-SMTP-server-with-NTLM-authentication"><span class="toc-number">30.</span> <span class="toc-text">Retrieving infromation from SMTP server with NTLM authentication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generating-scan-report"><span class="toc-number">31.</span> <span class="toc-text">Generating scan report</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Saving-scan-results-in-an-XML-format"><span class="toc-number">31.1.</span> <span class="toc-text">Saving scan results in an XML format</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Saving-scan-results-to-a-SQLite-database"><span class="toc-number">31.2.</span> <span class="toc-text">Saving scan results to a SQLite database</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('https://miro.medium.com/v2/resize:fit:720/format:webp/1*apOap4Yzzzuh3hht_dK6hQ.jpeg')"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By 小R</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const abcjsInit = () => {
+    const abcjsFn = () => {
+      document.querySelectorAll(".abc-music-sheet").forEach(ele => {
+        ABCJS.renderAbc(ele, ele.innerHTML, {responsive: 'resize'})
+      })
+    }
+    
+    typeof ABCJS === 'object' ? abcjsFn()
+      : getScript('https://cdn.jsdelivr.net/npm/abcjs@6.3.0/dist/abcjs-basic-min.min.js').then(abcjsFn)
+  }
+
+  window.pjax ? abcjsInit() : window.addEventListener('load', abcjsInit)
+})()</script></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>(() => {
+  window.$crisp = [];
+  window.CRISP_WEBSITE_ID = "c5d5d0cd-6f6b-403a-a9b2-8b9fd5d192d0";
+  (function () {
+    d = document;
+    s = d.createElement("script");
+    s.src = "https://client.crisp.chat/l.js";
+    s.async = 1;
+    d.getElementsByTagName("head")[0].appendChild(s);
+  })();
+  $crisp.push(["safe", true])
+
+  const isChatBtn = true
+  const isChatHideShow = false
+
+  if (isChatBtn) {
+    const open = () => {
+      $crisp.push(["do", "chat:show"])
+      $crisp.push(["do", "chat:open"])
+    }
+
+    const close = () => {
+      $crisp.push(["do", "chat:hide"])
+    }
+
+    close()
+    $crisp.push(["on", "chat:closed", function() {
+      close()
+    }])
+
+    window.chatBtnFn = () => {
+      $crisp.is("chat:visible") ? close() : open()
+    }
+  } else if (isChatHideShow) {
+    window.chatBtn = {
+      hide: () => {
+        $crisp.push(["do", "chat:hide"])
+      },
+      show: () => {
+        $crisp.push(["do", "chat:show"])
+      }
+    }
+  }
+})()</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
