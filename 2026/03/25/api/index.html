@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>API（应用程序编程接口） | 我的博客</title><meta name="author" content="The Inquisitives"><meta name="copyright" content="The Inquisitives"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什么是 API ? 是一种软件的中间件，它允许两个应用程序之间通过一套预先定义的规则和协议来相互通信、交换数据和执行操作。  它定义了软件如何请求以其他软件的功能和数据，就像外卖菜单一样，让开发人员无需了解底层细节就能使用其他服务，从而加速开发过程。   API的工作原理 请求-响应模式：API使用请求-响应模式进行通信。 一个应用程序（客户端）向API发送一个请求，API处理该请求并返回一个响应">
+<meta property="og:type" content="article">
+<meta property="og:title" content="API（应用程序编程接口）">
+<meta property="og:url" content="http://kpi19.github.io/2026/03/25/api/index.html">
+<meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="什么是 API ? 是一种软件的中间件，它允许两个应用程序之间通过一套预先定义的规则和协议来相互通信、交换数据和执行操作。  它定义了软件如何请求以其他软件的功能和数据，就像外卖菜单一样，让开发人员无需了解底层细节就能使用其他服务，从而加速开发过程。   API的工作原理 请求-响应模式：API使用请求-响应模式进行通信。 一个应用程序（客户端）向API发送一个请求，API处理该请求并返回一个响应">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://kpi19.github.io/img/background/XR%20(1).jpg">
+<meta property="article:published_time" content="2026-03-25T05:54:34.345Z">
+<meta property="article:modified_time" content="2025-10-23T16:18:09.598Z">
+<meta property="article:author" content="The Inquisitives">
+<meta property="article:tag" content="冷知识">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kpi19.github.io/img/background/XR%20(1).jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "API（应用程序编程接口）",
+  "url": "http://kpi19.github.io/2026/03/25/api/",
+  "image": "http://kpi19.github.io/img/background/XR%20(1).jpg",
+  "datePublished": "2026-03-25T05:54:34.345Z",
+  "dateModified": "2025-10-23T16:18:09.598Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "The Inquisitives",
+      "url": "http://kpi19.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/background/XR%20(1).jpg"><link rel="canonical" href="http://kpi19.github.io/2026/03/25/api/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: The Inquisitives","link":"链接: ","source":"来源: 我的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'API（应用程序编程接口）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/background/XR%20(1).jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Resource/"><i class="fa-fw fas fa-book"></i><span> 资源</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Friends/"><i class="fa-fw fas fa-user-friends"></i><span> 朋友</span></a></li><li><a class="site-page child" href="/About/"><i class="fa-fw fas fa-user-alt"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/background/abc.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">我的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">API（应用程序编程接口）</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Resource/"><i class="fa-fw fas fa-book"></i><span> 资源</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Friends/"><i class="fa-fw fas fa-user-friends"></i><span> 朋友</span></a></li><li><a class="site-page child" href="/About/"><i class="fa-fw fas fa-user-alt"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">API（应用程序编程接口）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-25T05:54:34.345Z" title="发表于 2026-03-25 13:54:34">2026-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-10-23T16:18:09.598Z" title="更新于 2025-10-24 00:18:09">2025-10-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%96%87%E6%A1%A3/">文档</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="什么是-API"><a href="#什么是-API" class="headerlink" title="什么是 API ?"></a>什么是 API ?</h1><ul>
+<li><p>是一种软件的中间件，它允许两个应用程序之间通过一套预先定义的规则和协议来相互通信、交换数据和执行操作。</p>
+</li>
+<li><p>它定义了软件如何请求以其他软件的功能和数据，就像外卖菜单一样，让开发人员无需了解底层细节就能使用其他服务，从而加速开发过程。</p>
+</li>
+</ul>
+<h2 id="API的工作原理"><a href="#API的工作原理" class="headerlink" title="API的工作原理"></a>API的工作原理</h2><ul>
+<li><p>请求-响应模式：<br>API使用请求-响应模式进行通信。 一个应用程序（客户端）向API发送一个请求，API处理该请求并返回一个响应，通常使用JSON或XML等标准数据格式。 </p>
+</li>
+<li><p>隐藏内部细节：<br>API的目的是隐藏复杂的内部系统细节，只暴露对程序员有用的部分，并保持接口的一致性，即使内部实现发生变化。 </p>
+</li>
+<li><p>现实世界的类比：<br>可以把它想象成一个ATM机。 用户通过ATM的界面（API）进行操作，但不需要知道银行内部如何处理交易的复杂流程。</p>
+</li>
+</ul>
+<h2 id="API的应用和重要性"><a href="#API的应用和重要性" class="headerlink" title="API的应用和重要性"></a>API的应用和重要性</h2><ul>
+<li><p>促进集成：<br>API允许开发人员将来自其他应用程序的数据和服务集成到自己的应用中，而无需从头开始构建所有功能。 </p>
+</li>
+<li><p>支持多种功能：<br>例如，社交媒体应用程序使用API来获取和发布帖子；地图应用程序使用地理位置API来显示步行性评分；电子商务网站使用支付API来处理交易。 </p>
+</li>
+<li><p>现代技术的基石：<br>API对于构建现代互联软件至关重要，是移动应用、云服务和微服务等技术的基础。</p>
+</li>
+</ul>
+<h2 id="API的种类"><a href="#API的种类" class="headerlink" title="API的种类"></a>API的种类</h2><ul>
+<li>开放API：: 可供所有第三方开发者使用的公共API。</li>
+<li>合作伙伴API：: 仅供特定的业务合作伙伴使用的API。</li>
+<li>内部API：: 供同一组织内的其他团队使用的API。</li>
+</ul>
+<h2 id="按技术架构或协议划分"><a href="#按技术架构或协议划分" class="headerlink" title="按技术架构或协议划分"></a>按技术架构或协议划分</h2><h3 id="REST-API"><a href="#REST-API" class="headerlink" title="REST API"></a>REST API</h3><ul>
+<li><p>描述：目前最流行、最常用的API架构风格。它基于HTTP协议，使用标准的HTTP方法（GET, POST, PUT, DELETE），数据格式通常为JSON。</p>
+</li>
+<li><p>特点：无状态、资源导向、易于理解和实现。</p>
+</li>
+<li><p>例子：GitHub API、大多数现代Web服务提供的API。</p>
+</li>
+</ul>
+<h3 id="SOAP-API"><a href="#SOAP-API" class="headerlink" title="SOAP API"></a>SOAP API</h3><ul>
+<li><p>描述：一种较老的、基于XML的协议。它定义了一套严格的标准和规范，包括安全性和事务处理。</p>
+</li>
+<li><p>特点：严格、安全、可靠，但也比REST更复杂、更重。</p>
+</li>
+<li><p>例子：许多传统企业级系统和金融支付系统。</p>
+</li>
+</ul>
+<h3 id="GraphQL-API"><a href="#GraphQL-API" class="headerlink" title="GraphQL API"></a>GraphQL API</h3><ul>
+<li><p>描述：由Facebook创建的一种查询语言和运行时。它允许客户端精确地指定需要的数据，避免了REST API中常见的“过度<br>取”或“获取不足”的问题。</p>
+</li>
+<li><p>特点：灵活、高效，一次请求即可获取所有所需资源。</p>
+</li>
+<li><p>例子：GitHub的公共API也提供了GraphQL版本。</p>
+</li>
+</ul>
+<h3 id="gRPC-API"><a href="#gRPC-API" class="headerlink" title="gRPC API"></a>gRPC API</h3><ul>
+<li><p>描述：由Google开发的高性能、开源的RPC框架。它使用HTTP&#x2F;2作为传输协议，并使用Protocol Buffers作为接口定义语言和序列化工具。</p>
+</li>
+<li><p>特点：速度快、效率高、支持双向流，特别适合微服务之间的内部通信。</p>
+</li>
+<li><p>例子：在大型分布式系统和微服务架构中非常常见。</p>
+</li>
+</ul>
+<h3 id="WebSocket-API"><a href="#WebSocket-API" class="headerlink" title="WebSocket API"></a>WebSocket API</h3><ul>
+<li><p>描述：提供全双工、双向的实时通信渠道。与HTTP的一次请求-一次响应模式不同，WebSocket连接建立后，服务器可以主动向<br>户端推送数据。</p>
+</li>
+<li><p>特点：实时性高，适合聊天应用、实时游戏、在线交易平台等。</p>
+</li>
+<li><p>例子：股票行情推送、在线协作工具。</p>
+</li>
+</ul>
+<h2 id="按功能或用途划分"><a href="#按功能或用途划分" class="headerlink" title="按功能或用途划分"></a>按功能或用途划分</h2><ul>
+<li>这是根据API提供的能力来分类。</li>
+</ul>
+<h3 id="1-操作系统API"><a href="#1-操作系统API" class="headerlink" title="1.操作系统API"></a>1.操作系统API</h3><ul>
+<li><p>描述：操作系统提供的函数集合，允许应用程序使用操作系统的功能，如文件管理、内存分配、创建图形界面等。</p>
+</li>
+<li><p>例子：Windows API、Linux的系统调用。</p>
+</li>
+</ul>
+<h3 id="2-数据库API"><a href="#2-数据库API" class="headerlink" title="2.数据库API"></a>2.数据库API</h3><ul>
+<li><p>描述：允许应用程序与数据库进行交互，执行查询、更新、删除等操作。</p>
+</li>
+<li><p>例子：JDBC、ODBC。</p>
+</li>
+</ul>
+<h3 id="3-远程API"><a href="#3-远程API" class="headerlink" title="3.远程API"></a>3.远程API</h3><ul>
+<li><p>描述：允许应用程序通过网络访问位于另一台计算机（远程）上的资源或服务。我们日常谈论的Web API大多属于此类。</p>
+</li>
+<li><p>例子：所有通过HTTP调用的RESTful API。</p>
+</li>
+</ul>
+<h3 id="4-硬件API"><a href="#4-硬件API" class="headerlink" title="4.硬件API"></a>4.硬件API</h3><ul>
+<li><p>描述：允许软件与硬件设备交互，例如控制摄像头、打印机、传感器等。</p>
+</li>
+<li><p>例子：手机上的摄像头API、蓝牙API。</p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th>分类维度</th>
+<th>主型要类</th>
+<th>特点与例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>分类维度</td>
+<td>主型要类</td>
+<td>特点与例子</td>
+</tr>
+<tr>
+<td>使用范围</td>
+<td>私有API、合作伙伴API、公开API</td>
+<td>按受众和商业策略划分</td>
+</tr>
+<tr>
+<td>技术架构</td>
+<td>REST API、SOAP API、GraphQL API、gRPC API、WebSocket API</td>
+<td>按通信协议和数据格式划分</td>
+</tr>
+<tr>
+<td>功能用途</td>
+<td>操作系统API、数据库API、远程API、硬件API</td>
+<td>按提供的具体功能划分</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="API-测试方式"><a href="#API-测试方式" class="headerlink" title="API 测试方式"></a>API 测试方式</h1><h2 id="一、API测试核心类型"><a href="#一、API测试核心类型" class="headerlink" title="一、API测试核心类型"></a>一、API测试核心类型</h2><h3 id="1-功能测试"><a href="#1-功能测试" class="headerlink" title="1.功能测试"></a>1.功能测试</h3><ul>
+<li><p>正确性验证：输入合法参数，检查返回数据、状态码是否符合预期。</p>
+</li>
+<li><p>错误处理：输入非法参数（如空值、超长字符），验证错误码和提示信息。</p>
+</li>
+<li><p>边界值测试：测试参数的最小&#x2F;最大值、临界值。</p>
+</li>
+<li><p>必填字段验证：忽略必填参数，检查接口是否正确处理。</p>
+</li>
+</ul>
+<h3 id="2-性能测试"><a href="#2-性能测试" class="headerlink" title="2.性能测试"></a>2.性能测试</h3><ul>
+<li><p>负载测试：模拟多用户并发请求，检查响应时间、吞吐量。</p>
+</li>
+<li><p>压力测试：逐步增加负载至极限，观察系统崩溃点及恢复能力。</p>
+</li>
+<li><p>稳定性测试：长时间运行接口，检测内存泄漏、性能下降等问题。</p>
+</li>
+</ul>
+<h3 id="3-安全测试"><a href="#3-安全测试" class="headerlink" title="3.安全测试"></a>3.安全测试</h3><ul>
+<li><p>身份认证：测试Token、API Key等认证机制是否有效。</p>
+</li>
+<li><p>权限控制：验证不同角色用户访问受限资源的权限。</p>
+</li>
+<li><p>数据安全：检查敏感数据（如密码、身份证号）是否加密传输。</p>
+</li>
+<li><p>SQL注入&#x2F;XSS：模拟攻击参数，验证接口防护能力。</p>
+</li>
+</ul>
+<h3 id="4-兼容性测试"><a href="#4-兼容性测试" class="headerlink" title="4.兼容性测试"></a>4.兼容性测试</h3><ul>
+<li><p>不同操作系统、浏览器、设备类型下的接口行为。</p>
+</li>
+<li><p>API版本兼容性（如v1与v2接口共存场景）。</p>
+</li>
+</ul>
+<hr>
+<h2 id="二、常用测试工具"><a href="#二、常用测试工具" class="headerlink" title="二、常用测试工具"></a>二、常用测试工具</h2><h3 id="1-Postman"><a href="#1-Postman" class="headerlink" title="1.Postman"></a>1.Postman</h3><ul>
+<li><p>图形化界面，支持自动化测试、环境变量管理。</p>
+</li>
+<li><p>示例：设置预请求脚本、测试断言（如pm.response.to.have.status(200)）。</p>
+</li>
+</ul>
+<h3 id="2-Swagger-OpenAPI"><a href="#2-Swagger-OpenAPI" class="headerlink" title="2.Swagger&#x2F;OpenAPI"></a>2.Swagger&#x2F;OpenAPI</h3><ul>
+<li>通过API文档生成测试用例，验证接口规范符合度。</li>
+</ul>
+<h3 id="3-JMeter"><a href="#3-JMeter" class="headerlink" title="3.JMeter"></a>3.JMeter</h3><ul>
+<li>性能测试为主，支持分布式压测、生成详细报告。</li>
+</ul>
+<h3 id="4-自动化框架"><a href="#4-自动化框架" class="headerlink" title="4.自动化框架"></a>4.自动化框架</h3><ul>
+<li>Python：requests + pytest（示例代码）：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_api_endpoint</span>():</span><br><span class="line">    response = requests.get(<span class="string">&quot;https://api.example.com/users&quot;</span>) <span class="comment">#可以修改这里</span></span><br><span class="line">    <span class="keyword">assert</span> response.status_code == <span class="number">200</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="string">&quot;application/json&quot;</span> <span class="keyword">in</span> response.headers[<span class="string">&quot;Content-Type&quot;</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>JavaScript：Supertest + Mocha。</li>
+</ul>
+<h2 id="三、测试步骤"><a href="#三、测试步骤" class="headerlink" title="三、测试步骤"></a>三、测试步骤</h2><h3 id="1-理解API文档"><a href="#1-理解API文档" class="headerlink" title="1.理解API文档"></a>1.理解API文档</h3><ul>
+<li>明确请求方法（GET&#x2F;POST&#x2F;PUT&#x2F;DELETE）、参数、响应格式。</li>
+</ul>
+<h3 id="2-设计测试用例"><a href="#2-设计测试用例" class="headerlink" title="2.设计测试用例"></a>2.设计测试用例</h3><ul>
+<li>覆盖正常场景、异常场景（如网络超时、服务器错误）。</li>
+</ul>
+<h3 id="3-执行测试"><a href="#3-执行测试" class="headerlink" title="3.执行测试"></a>3.执行测试</h3><ul>
+<li><p>手动测试：使用Postman、curl命令快速验证。</p>
+</li>
+<li><p>自动化测试：集成到CI&#x2F;CD流水线（如Jenkins、GitHub Actions）。</p>
+</li>
+</ul>
+<h3 id="4-验证与报告"><a href="#4-验证与报告" class="headerlink" title="4.验证与报告"></a>4.验证与报告</h3><ul>
+<li><p>检查响应数据、状态码、头部信息。</p>
+</li>
+<li><p>记录缺陷并跟踪修复（如使用Jira）。</p>
+</li>
+</ul>
+<h2 id="四、重点场景测试"><a href="#四、重点场景测试" class="headerlink" title="四、重点场景测试"></a>四、重点场景测试</h2><h3 id="1-幂等性测试"><a href="#1-幂等性测试" class="headerlink" title="1.幂等性测试"></a>1.幂等性测试</h3><ul>
+<li>对同一请求多次提交，结果是否一致（如支付接口）。</li>
+</ul>
+<h3 id="2-数据一致性"><a href="#2-数据一致性" class="headerlink" title="2.数据一致性"></a>2.数据一致性</h3><ul>
+<li>检查数据库与API返回数据是否匹配。</li>
+</ul>
+<h3 id="3-第三方依赖"><a href="#3-第三方依赖" class="headerlink" title="3.第三方依赖"></a>3.第三方依赖</h3><ul>
+<li>模拟依赖服务故障（如使用WireMock模拟外部API失败）。</li>
+</ul>
+<h3 id="五、最佳实践"><a href="#五、最佳实践" class="headerlink" title="五、最佳实践"></a>五、最佳实践</h3><ul>
+<li><p>环境隔离：区分测试、预生产、生产环境。</p>
+</li>
+<li><p>数据管理：使用独立测试数据，避免污染生产环境。</p>
+</li>
+<li><p>监控与日志：记录接口响应时间、错误率，便于排查问题。</p>
+</li>
+<li><p>文档维护：及时更新测试用例与API变更同步。</p>
+</li>
+</ul>
+<h3 id="六、示例：Postman自动化测试"><a href="#六、示例：Postman自动化测试" class="headerlink" title="六、示例：Postman自动化测试"></a>六、示例：Postman自动化测试</h3><ol>
+<li>在Tests标签中编写断言：</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pm.<span class="title function_">test</span>(<span class="string">&quot;Status code is 200&quot;</span>, <span class="function">() =&gt;</span> pm.<span class="property">response</span>.<span class="property">to</span>.<span class="property">have</span>.<span class="title function_">status</span>(<span class="number">200</span>));</span><br><span class="line">pm.<span class="title function_">test</span>(<span class="string">&quot;Response time &lt; 500ms&quot;</span>, <span class="function">() =&gt;</span> pm.<span class="title function_">expect</span>(pm.<span class="property">response</span>.<span class="property">responseTime</span>).<span class="property">to</span>.<span class="property">be</span>.<span class="title function_">below</span>(<span class="number">500</span>));</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用Collection Runner批量运行测试用例。</li>
+</ol>
+<ul>
+<li>Postman 下载</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">sudo</span> wget https://dl.pstmn.io/download/latest/linux64 -O postman-linux-x64.tar.gz &amp;&amp; <span class="built_in">sudo</span> tar -xvzf postman-linux-x64.tar.gz -C /opt &amp;&amp; <span class="built_in">sudo</span> <span class="built_in">ln</span> -s /opt/Postman/Postman /usr/bin/postman</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://kpi19.github.io">The Inquisitives</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://kpi19.github.io/2026/03/25/api/">http://kpi19.github.io/2026/03/25/api/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://kpi19.github.io" target="_blank">我的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%B7%E7%9F%A5%E8%AF%86/">冷知识</a></div><div class="post-share"><div class="social-share" data-image="/img/background/XR%20(1).jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/payment/vxp.jpeg" target="_blank"><img class="post-qr-code-img" src="/img/payment/vxp.jpeg" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/payment/alip.jpeg" target="_blank"><img class="post-qr-code-img" src="/img/payment/alip.jpeg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li><li class="reward-item"><a href="/img/payment/swp.jpeg" target="_blank"><img class="post-qr-code-img" src="/img/payment/swp.jpeg" alt="Sarawak Pay"/></a><div class="post-qr-code-desc">Sarawak Pay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/25/cyber_kill_chain/" title="Cyber Kill Chain (網路攻擊鏈)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Cyber Kill Chain (網路攻擊鏈)</div></div><div class="info-2"><div class="info-item-1">什么是 Cyber Kill Chain？ Cyber Kill Chain（网络杀伤链） 是一个把复杂网络攻击拆成若干阶段（链条）来理解与防御的模型，最早由 Lockheed Martin 提出。把攻击流程分成阶段，有助于防守方在早期发现并中断攻击，从而减少损失。常见的传统阶段（Lockheed Martin 版本）如下：   Reconnaissance（侦察）：收集目标信息（公开资料、扫描、社交工程等）。  Weaponization（武器化）：攻击者将漏洞利用或恶意负载和投递载体（如钓鱼邮件附件）打包。  Delivery（投递）：把恶意载体发送到目标（邮件、网页、可移动介质等）。  Exploitation（利用）：触发漏洞&#x2F;执行恶意代码。  Installation（安装）：在目标上安装持久性后门或恶意程序。  Command &amp; Control（指挥与控制，C2）：被控主机与攻击者的服务器建立通信。  Actions on Objectives（达成目的）：横向移动、数据窃取、破坏、勒索等实际损害行为。    补充：现在很多防御团队会把 Kill...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/25/morse_code/" title="摩尔斯电码"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-25</div><div class="info-item-2">摩尔斯电码</div></div><div class="info-2"><div class="info-item-1">什么是摩尔斯电码？它是一种早期的数位化通讯形式，但是它不同于现代只使用0和1两种状态的二进制代码，它的代码包括五种：   点（·）：1 划（-）：111 字符内部的停顿（在点和划之间）：0	103 IMAGES  字符之间的停顿：000 单词之间的停顿：0000000  历史 最早的摩尔斯电码是一些表示数字的点和划。数字对应单词，需要查找一本代码表才能知道每个词对应的数。用一个电键可以敲击出点、划以及中间的停顿。 虽然摩尔斯发明了电报，但他缺乏相关的专门技术。他与艾尔菲德·维尔签定了一个协议，让他帮自己制造更加实用的设备。艾尔菲德·维尔构思了一个方案，通过点、划和中间的停顿，可以让每个字符和标点符号彼此独立地发送出去。他们达成一致，同意把这种标示不同符号的方案放到摩尔斯的专利中。这就是现在我们所熟知的美式摩尔斯电码，它被用来传送了世界上第一条电报。 这种代码可以用一种音调平稳时断时续的无线电信号来传送，通常被称做连续波（Continuous...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/background/XR%20(1).jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">The Inquisitives</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/kpi19"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/kpi19" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:richearyu@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">‘欢迎来到我的博客‘</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-API"><span class="toc-number">1.</span> <span class="toc-text">什么是 API ?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#API%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">API的工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#API%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">API的应用和重要性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#API%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="toc-number">1.3.</span> <span class="toc-text">API的种类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%E6%88%96%E5%8D%8F%E8%AE%AE%E5%88%92%E5%88%86"><span class="toc-number">1.4.</span> <span class="toc-text">按技术架构或协议划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#REST-API"><span class="toc-number">1.4.1.</span> <span class="toc-text">REST API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOAP-API"><span class="toc-number">1.4.2.</span> <span class="toc-text">SOAP API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphQL-API"><span class="toc-number">1.4.3.</span> <span class="toc-text">GraphQL API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gRPC-API"><span class="toc-number">1.4.4.</span> <span class="toc-text">gRPC API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebSocket-API"><span class="toc-number">1.4.5.</span> <span class="toc-text">WebSocket API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E5%8A%9F%E8%83%BD%E6%88%96%E7%94%A8%E9%80%94%E5%88%92%E5%88%86"><span class="toc-number">1.5.</span> <span class="toc-text">按功能或用途划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9FAPI"><span class="toc-number">1.5.1.</span> <span class="toc-text">1.操作系统API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93API"><span class="toc-number">1.5.2.</span> <span class="toc-text">2.数据库API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%BF%9C%E7%A8%8BAPI"><span class="toc-number">1.5.3.</span> <span class="toc-text">3.远程API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A1%AC%E4%BB%B6API"><span class="toc-number">1.5.4.</span> <span class="toc-text">4.硬件API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#API-%E6%B5%8B%E8%AF%95%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">API 测试方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81API%E6%B5%8B%E8%AF%95%E6%A0%B8%E5%BF%83%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text">一、API测试核心类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.功能测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.性能测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95"><span class="toc-number">2.1.3.</span> <span class="toc-text">3.安全测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%BC%E5%AE%B9%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="toc-number">2.1.4.</span> <span class="toc-text">4.兼容性测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%B8%B8%E7%94%A8%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">2.2.</span> <span class="toc-text">二、常用测试工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Postman"><span class="toc-number">2.2.1.</span> <span class="toc-text">1.Postman</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Swagger-OpenAPI"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.Swagger&#x2F;OpenAPI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-JMeter"><span class="toc-number">2.2.3.</span> <span class="toc-text">3.JMeter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%A1%86%E6%9E%B6"><span class="toc-number">2.2.4.</span> <span class="toc-text">4.自动化框架</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B5%8B%E8%AF%95%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.3.</span> <span class="toc-text">三、测试步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%90%86%E8%A7%A3API%E6%96%87%E6%A1%A3"><span class="toc-number">2.3.1.</span> <span class="toc-text">1.理解API文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%BE%E8%AE%A1%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="toc-number">2.3.2.</span> <span class="toc-text">2.设计测试用例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%89%A7%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-number">2.3.3.</span> <span class="toc-text">3.执行测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%AA%8C%E8%AF%81%E4%B8%8E%E6%8A%A5%E5%91%8A"><span class="toc-number">2.3.4.</span> <span class="toc-text">4.验证与报告</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%87%8D%E7%82%B9%E5%9C%BA%E6%99%AF%E6%B5%8B%E8%AF%95"><span class="toc-number">2.4.</span> <span class="toc-text">四、重点场景测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B9%82%E7%AD%89%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="toc-number">2.4.1.</span> <span class="toc-text">1.幂等性测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">2.4.2.</span> <span class="toc-text">2.数据一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%AC%AC%E4%B8%89%E6%96%B9%E4%BE%9D%E8%B5%96"><span class="toc-number">2.4.3.</span> <span class="toc-text">3.第三方依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">2.4.4.</span> <span class="toc-text">五、最佳实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%A4%BA%E4%BE%8B%EF%BC%9APostman%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="toc-number">2.4.5.</span> <span class="toc-text">六、示例：Postman自动化测试</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/25/api/" title="API（应用程序编程接口）">API（应用程序编程接口）</a><time datetime="2026-03-25T05:54:34.345Z" title="发表于 2026-03-25 13:54:34">2026-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/25/cyber_kill_chain/" title="Cyber Kill Chain (網路攻擊鏈)">Cyber Kill Chain (網路攻擊鏈)</a><time datetime="2026-03-25T05:54:34.341Z" title="发表于 2026-03-25 13:54:34">2026-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/25/law/" title="国家法律">国家法律</a><time datetime="2026-03-25T05:54:34.336Z" title="发表于 2026-03-25 13:54:34">2026-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/25/kali_pinyin/" title="Kali汉语拼音设置">Kali汉语拼音设置</a><time datetime="2026-03-25T05:54:34.331Z" title="发表于 2026-03-25 13:54:34">2026-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/25/morse_code/" title="摩尔斯电码">摩尔斯电码</a><time datetime="2026-03-25T05:54:34.326Z" title="发表于 2026-03-25 13:54:34">2026-03-25</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/background/abc.png);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2026 By The Inquisitives</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
